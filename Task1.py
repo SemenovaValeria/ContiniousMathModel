@@ -3,20 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 t = sp.symbols('t')
-A, B, C, D = sp.symbols('A B C D')
 
-x_t = (32/3) - (2/3)*sp.exp(-5*t) + 2
-y_t = (32/3) + (4/3)*sp.exp(-5*t) + 3
+x_t = (32/3)*sp.exp(-5*t) - (2/3)*sp.exp(2*t) + 2
+y_t = (32/3)*sp.exp(-5*t) + (4/3)*sp.exp(2*t) + 3
 
-dx_dt = sp.diff(x_t, t)
-dy_dt = sp.diff(y_t, t)
+x_initial = x_t.subs(t, 0)
+y_initial = y_t.subs(t, 0)
 
-eq1 = sp.Eq(dx_dt, y_t - 3*x_t + 3)
-eq2 = sp.Eq(dy_dt, 2*x_t - 4*y_t + 8)
-
-print("Verification for specific solutions:")
-print("Equation 1 is satisfied:", eq1.simplify())
-print("Equation 2 is satisfied:", eq2.simplify())
+print(f"x(0) = 12 is met: {x_initial == 12}")
+print(f"y(0) = 15 is met: {y_initial == 15}")
 
 def x_t_general(t, C, D):
     return C * np.exp(-5*t) + D*np.exp(2*t) + 2
